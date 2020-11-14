@@ -9,4 +9,6 @@ ADD ./package-lock.json /code
 
 RUN npm install
 
+ADD . /code
+
 CMD [ "npm", "start" ]
