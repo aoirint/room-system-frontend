@@ -19,3 +19,5 @@
 ```bash
 ./docker_run.sh npm run build
 ```
+
+`build`ディレクトリに静的ホスティング可能なファイル群が出力されます。
