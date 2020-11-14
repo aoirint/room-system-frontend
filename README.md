@@ -4,6 +4,8 @@
 ## 設定
 1. FirebaseプロジェクトにWebアプリを追加する
 2. `template.env`を`.env`にコピーして、APIキーなどを書き込む
+3. Firebase Authenticationにユーザを手動で追加する
+4. Realtime Databaseの`/users/$UID/readable`をtrueにする（`$UID`は追加したユーザのUID）
 
 ## Dockerイメージのビルド
 ```bash
