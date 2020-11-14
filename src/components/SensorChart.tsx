@@ -52,18 +52,21 @@ class SensorChart extends React.Component<{}, State> {
     let sensorDataEntries = Object.entries(sensorData);
     let timestampList = sensorDataEntries.map(([_, item]) => item.timestamp);
     let lightList = sensorDataEntries.map(([_, item]) => item.light);
-    let temperatureList = sensorDataEntries.map(([_, item]) => item.temperature);
+    let temperatureList = sensorDataEntries.map(([_, item]) => item.temperatureCelsius);
 
     let data: any = {
       labels: timestampList,
       datasets: [
         {
-          label: 'Light',
+          label: '明るさ',
+          yAxisID: 'light',
           data: lightList,
-          fill: true
+          fill: true,
+          lineTension: false
         },
         {
-          label: 'Temperature',
+          label: '室温',
+          yAxisID: 'temperature',
           data: temperatureList
         }
       ]
@@ -76,6 +79,29 @@ class SensorChart extends React.Component<{}, State> {
             displayFormats: {
               minute: 'HH:mm',
             }
+          }
+        }],
+        yAxes: [{
+          id: 'light',
+          position: 'left',
+          scaleLabel: {
+            display: true,
+            labelString: '明るさ（電圧値≦1023）'
+          },
+          ticks: {
+            suggestedMin: 0,
+            suggestedMax: 1023
+          }
+        },{
+          id: 'temperature',
+          position: 'right',
+          scaleLabel: {
+            display: true,
+            labelString: '室温（摂氏）'
+          },
+          ticks: {
+            suggestedMin: 10,
+            suggestedMax: 30
           }
         }]
       }
