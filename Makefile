@@ -7,16 +7,15 @@ docker-build:
 		-t aoirint/room-system-frontend
 
 build: docker-build
-		echo $(ROOT_DIR)
-		docker run --rm \
-			-u node \
-			-e HTTP_PROXY \
-			-e HTTPS_PROXY \
-			--env-file "$(ROOT_DIR)/.env" \
-			-v "$(ROOT_DIR)/src:/code/src" \
-			-v "$(ROOT_DIR)/public:/code/public" \
-			-v "$(ROOT_DIR)/build:/code/build" \
-			aoirint/room-system-frontend \
+	docker run --rm \
+		-u node \
+		-e HTTP_PROXY \
+		-e HTTPS_PROXY \
+		--env-file "$(ROOT_DIR)/.env" \
+		-v "$(ROOT_DIR)/src:/code/src" \
+		-v "$(ROOT_DIR)/public:/code/public" \
+		-v "$(ROOT_DIR)/build:/code/build" \
+		aoirint/room-system-frontend \
 		npm run build
 
 start: docker-build

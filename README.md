@@ -10,17 +10,17 @@
 
 ## Dockerイメージのビルド
 ```bash
-./docker_build.sh
+make docker-build
 ```
 
 ## 開発サーバの起動
 ```bash
-./docker_run.sh npm start
+make start
 ```
 
 ## Node.js 本番用ビルド
 ```bash
-./docker_run.sh npm run build
+make build
 ```
 
 `build`ディレクトリに静的ホスティング可能なファイル群が出力されます。
