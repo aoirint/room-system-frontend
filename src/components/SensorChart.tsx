@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import firebase from './Firebase'
 import { useListVals } from 'react-firebase-hooks/database'
 
@@ -14,10 +14,12 @@ interface SensorData {
 }
 
 function SensorChart (): JSX.Element {
+  const [dataCount, setDataCount] = useState(12)
+
   const ref = firebase.database().ref('sensor')
     .child('environment')
     .orderByChild('timestamp')
-    .limitToLast(12)
+    .limitToLast(dataCount)
   const [sensorData, loading, error] = useListVals<SensorData>(ref)
 
   if (loading) {
@@ -92,7 +94,17 @@ function SensorChart (): JSX.Element {
 
   return (
     <div className='SensorChart'>
-      <Line data={data} options={options} />
+      <div className='chart'>
+        <Line data={data} options={options} />
+      </div>
+      <button onClick={() => setDataCount(12)}>60m</button>
+      <button onClick={() => setDataCount(12*2)}>120m</button>
+      <button onClick={() => setDataCount(12*12)}>12h</button>
+      <button onClick={() => setDataCount(12*24)}>24h</button>
+      <button onClick={() => setDataCount(12*24*3)}>3d</button>
+      <button onClick={() => setDataCount(12*24*7)}>7d</button>
+      <button onClick={() => setDataCount(12*24*7*2)}>2w</button>
+      <button onClick={() => setDataCount(12*24*7*4)}>4w</button>
     </div>
   )
 }
