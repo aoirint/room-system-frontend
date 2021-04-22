@@ -1,124 +1,122 @@
-import React from 'react';
-import { withRouter, RouteComponentProps } from 'react-router';
-import { Button, Form, FormGroup, Label, Input, FormFeedback, Spinner } from 'reactstrap';
-import { Formik } from 'formik';
-import * as Yup from 'yup';
+import React, { useState } from 'react'
+import { withRouter, RouteComponentProps } from 'react-router'
+import { Button, Form, FormGroup, Label, Input, FormFeedback, Spinner } from 'reactstrap'
+import { Formik, FormikProps } from 'formik'
+import * as Yup from 'yup'
+import LoadingOverlay from 'react-loading-overlay'
 
-import firebase from './Firebase';
+import firebase from './Firebase'
+import { useAuthState } from 'react-firebase-hooks/auth'
 
-interface Props extends RouteComponentProps {
+interface SignInProps extends RouteComponentProps {
 }
 
 interface State {
-  isLoading: boolean;
+  isLoading: boolean
 }
 
-interface SignInInfo {
-  email: string;
-  password: string;
+interface SignInValues {
+  email: string
+  password: string
 }
 
-class SignIn extends React.Component<Props, State> {
-  state: State = {
-    isLoading: true,
-  }
+function submitSignIn (values: SignInValues) {
+  firebase.auth().signInWithEmailAndPassword(values.email, values.password)
+    .then(res => {
+    })
+    .catch(error => {
+      alert(error)
+    })
+}
 
-  _isMounted: boolean = false;
+function SignInForm (props: FormikProps<SignInValues>) {
+  const [user, loading, error] = useAuthState(firebase.auth())
 
-  handleOnSubmit(values: SignInInfo) {
-    if (this._isMounted) this.setState({isLoading: true});
+  return (
+    <Form onSubmit={props.handleSubmit}>
+      <FormGroup>
+        <Label for='email'>Email</Label>
+        <Input
+          type='email'
+          name='email'
+          id='email'
+          value={props.values.email}
+          onChange={props.handleChange}
+          onBlur={props.handleBlur}
+          invalid={!!(props.touched.email && props.errors.email)}
+        />
+        <FormFeedback>
+          {props.errors.email}
+        </FormFeedback>
+      </FormGroup>
 
-    firebase.auth().signInWithEmailAndPassword(values.email, values.password)
-      .then(res => {
-        this.props.history.push('/');
-        if (this._isMounted) this.setState({isLoading: false});
-      })
-      .catch(error => {
-        if (this._isMounted) this.setState({isLoading: false});
-        alert(error);
-      });
-  }
+      <FormGroup>
+        <Label for='password'>Password</Label>
+        <Input
+          type='password'
+          name='password'
+          id='password'
+          value={props.values.password}
+          onChange={props.handleChange}
+          onBlur={props.handleBlur}
+          invalid={!!(props.touched.password && props.errors.password)}
+        />
+        <FormFeedback>
+          {props.errors.password}
+        </FormFeedback>
+      </FormGroup>
 
-  componentDidMount() {
-    this._isMounted = true;
+      <Button color='primary' type='submit' disabled={loading}>
+        <Spinner size='sm' color='light' hidden={!loading} />
+        ログイン
+      </Button>
 
-    firebase.auth().onAuthStateChanged(user => {
-      if (user) {
-        this.setState({
-          isLoading: false,
-        });
-      }
-      else {
-        this.setState({
-          isLoading: false,
-        });
-      }
-    });
-  }
-  componentWillUnmount() {
-    this._isMounted = false;
-  }
+    </Form>
+  )
+}
 
-  render() {
-    const initialValues: SignInInfo = { email: '', password: '' };
+function SignIn (props: SignInProps) {
+  const [user, loading, error] = useAuthState(firebase.auth())
 
+  if (loading) {
     return (
-      <Formik
-        initialValues={initialValues}
-        onSubmit={(values) => this.handleOnSubmit(values)}
-        validationSchema={
-          Yup.object().shape({
-            email: Yup.string().email().required(),
-            password: Yup.string().required(),
-          })
-        }
-      >
-        {
-          ({handleSubmit, handleChange, handleBlur, values, errors, touched }) => (
-            <Form onSubmit={handleSubmit}>
-              <FormGroup>
-                <Label for="email">Email</Label>
-                <Input
-                  type="email"
-                  name="email"
-                  id="email"
-                  value={values.email}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  invalid={touched.email && errors.email ? true : false}
-                />
-                <FormFeedback>
-                  {errors.email}
-                </FormFeedback>
-              </FormGroup>
-
-              <FormGroup>
-                <Label for="password">Password</Label>
-                <Input
-                  type="password"
-                  name="password"
-                  id="password"
-                  value={values.password}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  invalid={touched.password && errors.password ? true : false}
-                />
-                <FormFeedback>
-                  {errors.password}
-                </FormFeedback>
-              </FormGroup>
-              
-              <Button color="primary" type="submit" disabled={this.state.isLoading}>
-                <Spinner size="sm" color="light" hidden={!this.state.isLoading} />
-                ログイン
-              </Button>
-
-            </Form>
-          )
-        }
-      </Formik>
-    );
+      <LoadingOverlay
+        active
+        spinner
+        text='Loading...'
+      />
+    )
   }
+
+  if (error != null) {
+    return (
+      <div>Error: {error}</div>
+    )
+  }
+
+  if (user != null) {
+    props.history.push('/')
+    return (
+      <div>Signed In</div>
+    )
+  }
+
+  const initialValues: SignInValues = { email: '', password: '' }
+
+  return (
+    <Formik
+      initialValues={initialValues}
+      onSubmit={(values) => submitSignIn(values)}
+      validationSchema={
+        Yup.object().shape({
+          email: Yup.string().email().required(),
+          password: Yup.string().required()
+        })
+      }
+    >
+      {SignInForm}
+    </Formik>
+  )
 }
 
-export default withRouter(SignIn);
+export default withRouter(SignIn)

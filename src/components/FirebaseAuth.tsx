@@ -1,66 +1,35 @@
-import React from 'react';
-import { Redirect } from 'react-router-dom';
-import LoadingOverlay from 'react-loading-overlay';
-import firebase from './Firebase';
+import React, { useState } from 'react'
+import { Redirect } from 'react-router-dom'
+import LoadingOverlay from 'react-loading-overlay'
+import firebase from './Firebase'
+import { useAuthState } from 'react-firebase-hooks/auth'
 
-interface State {
-  isLoading: boolean;
-  signedIn: boolean;
+interface FirebaseAuthProps {
+  children?: React.ReactNode
 }
 
-class FirebaseAuth extends React.Component<{}, State> {
-  state: State = {
-    isLoading: true,
-    signedIn: false,
+function FirebaseAuth (props: FirebaseAuthProps) {
+  const [user, loading, error] = useAuthState(firebase.auth())
+
+  if (loading) {
+    return (
+      <LoadingOverlay
+        active
+        spinner
+        text='Loading...'
+      />
+    )
   }
 
-  _isMounted: boolean = false;
-
-  componentDidMount() {
-    this._isMounted = true;
-
-    firebase.auth().onAuthStateChanged(user => {
-      if (user) {
-        if (this._isMounted) {
-          this.setState({
-            isLoading: false,
-            signedIn: true,
-          });
-        }
-      }
-      else {
-        if (this._isMounted) {
-          this.setState({
-            isLoading: false,
-            signedIn: false,
-          });
-        }
-      }
-    });
-  }
-  
-  componentWillUnmount() {
-    this._isMounted = false;
+  if (error != null) {
+    return <div>Error: {error}</div>
   }
 
-  render() {
-    if (this.state.isLoading) {
-      return (
-        <LoadingOverlay
-          active={true}
-          spinner
-          text='Loading...'
-        >
-        </LoadingOverlay>
-      )
-    }
-
-    if (this.state.signedIn) {
-      return this.props.children;
-    } else {
-      return <Redirect to="/signin" />
-    }
+  if (user == null) {
+    return <Redirect to='/signin' />
   }
+
+  return <div className='FirebaseAuth'>{props.children}</div>
 }
 
-export default FirebaseAuth;
+export default FirebaseAuth

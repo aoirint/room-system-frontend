@@ -1,28 +1,26 @@
-import React from 'react';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import React from 'react'
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 
-import FirebaseAuth from './FirebaseAuth';
-import SignIn from './SignIn';
-import Home from './Home';
-import './App.css';
+import FirebaseAuth from './FirebaseAuth'
+import SignIn from './SignIn'
+import Home from './Home'
+import './App.css'
 
-class App extends React.Component<{}, {}> {
-  render() {
-    return (
-      <Router>
-        <Switch>
-          <Route exact path="/signin" component={SignIn} />
+function App () {
+  return (
+    <Router>
+      <Switch>
+        <Route exact path='/signin' component={SignIn} />
 
-          <FirebaseAuth>
-            <Switch>
-              <Route exact path="/" component={Home} />
-            </Switch>
-          </FirebaseAuth>
+        <FirebaseAuth>
+          <Switch>
+            <Route exact path='/' component={Home} />
+          </Switch>
+        </FirebaseAuth>
 
-        </Switch>
-      </Router>
-    );
-  }
+      </Switch>
+    </Router>
+  )
 }
 
-export default App;
+export default App
