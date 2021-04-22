@@ -97,14 +97,14 @@ function SensorChart (): JSX.Element {
       <div className='chart'>
         <Line data={data} options={options} />
       </div>
-      <button onClick={() => setDataCount(12)}>60m</button>
-      <button onClick={() => setDataCount(12*2)}>120m</button>
-      <button onClick={() => setDataCount(12*12)}>12h</button>
-      <button onClick={() => setDataCount(12*24)}>24h</button>
-      <button onClick={() => setDataCount(12*24*3)}>3d</button>
-      <button onClick={() => setDataCount(12*24*7)}>7d</button>
-      <button onClick={() => setDataCount(12*24*7*2)}>2w</button>
-      <button onClick={() => setDataCount(12*24*7*4)}>4w</button>
+      <button onClick={() => setDataCount(12)}>3h</button>
+      <button onClick={() => setDataCount(12*2)}>6h</button>
+      <button onClick={() => setDataCount(12*4)}>12h</button>
+      <button onClick={() => setDataCount(12*8)}>24h</button>
+      <button onClick={() => setDataCount(12*8*3)}>3d</button>
+      <button onClick={() => setDataCount(12*8*7)}>7d</button>
+      <button onClick={() => setDataCount(12*8*7*2)}>2w</button>
+      <button onClick={() => setDataCount(12*8*7*4)}>4w</button>
     </div>
   )
 }
