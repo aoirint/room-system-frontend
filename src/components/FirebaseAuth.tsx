@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { Redirect } from 'react-router-dom'
 import LoadingOverlay from 'react-loading-overlay'
 import firebase from './Firebase'
@@ -8,7 +8,7 @@ interface FirebaseAuthProps {
   children?: React.ReactNode
 }
 
-function FirebaseAuth (props: FirebaseAuthProps) {
+function FirebaseAuth (props: FirebaseAuthProps): JSX.Element {
   const [user, loading, error] = useAuthState(firebase.auth())
 
   if (loading) {

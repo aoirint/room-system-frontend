@@ -13,12 +13,7 @@ interface SensorData {
   timestamp: number
 }
 
-interface State {
-  isLoading: boolean
-  sensorData?: SensorData[]
-}
-
-function SensorChart () {
+function SensorChart (): JSX.Element {
   const ref = firebase.database().ref('sensor')
     .child('environment')
     .orderByChild('timestamp')

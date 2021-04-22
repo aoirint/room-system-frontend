@@ -1,7 +1,7 @@
 import React from 'react'
 import SensorChart from './SensorChart'
 
-function Home () {
+function Home (): JSX.Element {
   return (
     <div className='Home'>
       <SensorChart />

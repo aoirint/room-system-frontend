@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { withRouter, RouteComponentProps } from 'react-router'
 import { Button, Form, FormGroup, Label, Input, FormFeedback, Spinner } from 'reactstrap'
 import { Formik, FormikProps } from 'formik'
@@ -8,19 +8,12 @@ import LoadingOverlay from 'react-loading-overlay'
 import firebase from './Firebase'
 import { useAuthState } from 'react-firebase-hooks/auth'
 
-interface SignInProps extends RouteComponentProps {
-}
-
-interface State {
-  isLoading: boolean
-}
-
 interface SignInValues {
   email: string
   password: string
 }
 
-function submitSignIn (values: SignInValues) {
+function submitSignIn (values: SignInValues): void {
   firebase.auth().signInWithEmailAndPassword(values.email, values.password)
     .then(res => {
     })
@@ -29,8 +22,8 @@ function submitSignIn (values: SignInValues) {
     })
 }
 
-function SignInForm (props: FormikProps<SignInValues>) {
-  const [user, loading, error] = useAuthState(firebase.auth())
+function SignInForm (props: FormikProps<SignInValues>): JSX.Element {
+  const [, loading] = useAuthState(firebase.auth())
 
   return (
     <Form onSubmit={props.handleSubmit}>
@@ -40,13 +33,13 @@ function SignInForm (props: FormikProps<SignInValues>) {
           type='email'
           name='email'
           id='email'
-          value={props.values.email}
+          value={props.values.email ?? ''}
           onChange={props.handleChange}
           onBlur={props.handleBlur}
-          invalid={!!(props.touched.email && props.errors.email)}
+          invalid={!!(props.touched.email != null && props.errors.email != null)}
         />
         <FormFeedback>
-          {props.errors.email}
+          {props.errors.email ?? ''}
         </FormFeedback>
       </FormGroup>
 
@@ -59,7 +52,7 @@ function SignInForm (props: FormikProps<SignInValues>) {
           value={props.values.password}
           onChange={props.handleChange}
           onBlur={props.handleBlur}
-          invalid={!!(props.touched.password && props.errors.password)}
+          invalid={!!(props.touched.password != null && props.errors.password != null)}
         />
         <FormFeedback>
           {props.errors.password}
@@ -75,7 +68,7 @@ function SignInForm (props: FormikProps<SignInValues>) {
   )
 }
 
-function SignIn (props: SignInProps) {
+function SignIn (props: RouteComponentProps): JSX.Element {
   const [user, loading, error] = useAuthState(firebase.auth())
 
   if (loading) {
@@ -97,7 +90,7 @@ function SignIn (props: SignInProps) {
   if (user != null) {
     props.history.push('/')
     return (
-      <div>Signed In</div>
+      <div>Signed In: {user.uid}</div>
     )
   }
 

@@ -6,7 +6,7 @@ import SignIn from './SignIn'
 import Home from './Home'
 import './App.css'
 
-function App () {
+function App (): JSX.Element {
   return (
     <Router>
       <Switch>
