@@ -99,31 +99,35 @@ function SensorChart (): JSX.Element {
       <div className='chart'>
         <Line data={data} options={options} />
       </div>
-      <div className='my-3 d-flex justify-content-center'>
-        <Button className='mx-2 btn-secondary' onClick={() => setDataCount(12)}>
-          3h
-        </Button>
-        <Button className='mx-2 btn-secondary' onClick={() => setDataCount(12*2)}>
-          6h
-        </Button>
-        <Button className='mx-2 btn-secondary' onClick={() => setDataCount(12*4)}>
-          12h
-        </Button>
-        <Button className='mx-2 btn-secondary' onClick={() => setDataCount(12*8)}>
-          24h
-        </Button>
-        <Button className='mx-2 btn-secondary' onClick={() => setDataCount(12*8*3)}>
-          3d
-        </Button>
-        <Button className='mx-2 btn-secondary' onClick={() => setDataCount(12*8*7)}>
-          7d
-        </Button>
-        <Button className='mx-2 btn-secondary' onClick={() => setDataCount(12*8*7*2)}>
-          2w
-        </Button>
-        <Button className='mx-2 btn-secondary' onClick={() => setDataCount(12*8*7*4)}>
-          4w
-        </Button>
+      <div className='my-3'>
+        <div className='mx-2 my-2 d-flex justify-content-center btn-group'>
+          <Button className='btn-secondary' onClick={() => setDataCount(12)}>
+            3h
+          </Button>
+          <Button className='btn-secondary' onClick={() => setDataCount(12*2)}>
+            6h
+          </Button>
+          <Button className='btn-secondary' onClick={() => setDataCount(12*4)}>
+            12h
+          </Button>
+          <Button className='btn-secondary' onClick={() => setDataCount(12*8)}>
+            24h
+          </Button>
+        </div>
+        <div className='mx-2 my-2 d-flex justify-content-center btn-group'>
+          <Button className='btn-secondary' onClick={() => setDataCount(12*8*3)}>
+            3d
+          </Button>
+          <Button className='btn-secondary' onClick={() => setDataCount(12*8*7)}>
+            7d
+          </Button>
+          <Button className='btn-secondary' onClick={() => setDataCount(12*8*7*2)}>
+            2w
+          </Button>
+          <Button className='btn-secondary' onClick={() => setDataCount(12*8*7*4)}>
+            4w
+          </Button>
+        </div>
       </div>
     </div>
   )
