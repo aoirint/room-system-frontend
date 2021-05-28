@@ -3,9 +3,10 @@ FROM node:14
 ARG HTTP_PROXY
 ARG HTTPS_PROXY
 
-USER node
-RUN mkdir -p /code
 WORKDIR /code
+RUN chown -R node:node /code
+
+USER node
 
 ADD ./package.json /code
 ADD ./package-lock.json /code
