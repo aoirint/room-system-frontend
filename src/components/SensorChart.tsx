@@ -2,6 +2,8 @@ import React, { useState } from 'react'
 import firebase from './Firebase'
 import { useListVals } from 'react-firebase-hooks/database'
 
+import { Button } from 'reactstrap'
+
 import { Line } from 'react-chartjs-2'
 import { ChartOptions } from 'chart.js'
 import 'chartjs-plugin-colorschemes'
@@ -97,14 +99,32 @@ function SensorChart (): JSX.Element {
       <div className='chart'>
         <Line data={data} options={options} />
       </div>
-      <button onClick={() => setDataCount(12)}>3h</button>
-      <button onClick={() => setDataCount(12*2)}>6h</button>
-      <button onClick={() => setDataCount(12*4)}>12h</button>
-      <button onClick={() => setDataCount(12*8)}>24h</button>
-      <button onClick={() => setDataCount(12*8*3)}>3d</button>
-      <button onClick={() => setDataCount(12*8*7)}>7d</button>
-      <button onClick={() => setDataCount(12*8*7*2)}>2w</button>
-      <button onClick={() => setDataCount(12*8*7*4)}>4w</button>
+      <div className='my-3 d-flex justify-content-center'>
+        <Button className='mx-2 btn-secondary' onClick={() => setDataCount(12)}>
+          3h
+        </Button>
+        <Button className='mx-2 btn-secondary' onClick={() => setDataCount(12*2)}>
+          6h
+        </Button>
+        <Button className='mx-2 btn-secondary' onClick={() => setDataCount(12*4)}>
+          12h
+        </Button>
+        <Button className='mx-2 btn-secondary' onClick={() => setDataCount(12*8)}>
+          24h
+        </Button>
+        <Button className='mx-2 btn-secondary' onClick={() => setDataCount(12*8*3)}>
+          3d
+        </Button>
+        <Button className='mx-2 btn-secondary' onClick={() => setDataCount(12*8*7)}>
+          7d
+        </Button>
+        <Button className='mx-2 btn-secondary' onClick={() => setDataCount(12*8*7*2)}>
+          2w
+        </Button>
+        <Button className='mx-2 btn-secondary' onClick={() => setDataCount(12*8*7*4)}>
+          4w
+        </Button>
+      </div>
     </div>
   )
 }

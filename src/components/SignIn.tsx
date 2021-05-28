@@ -1,6 +1,8 @@
 import React from 'react'
 import { withRouter, RouteComponentProps } from 'react-router'
 
+import { Container } from 'reactstrap'
+
 import firebase from './Firebase'
 import { useAuthState } from 'react-firebase-hooks/auth'
 
@@ -19,23 +21,26 @@ function SignIn (props: RouteComponentProps): JSX.Element {
 
   return (
     <div className='SignIn'>
-      {authLoading ? (
-        <p>
-          Loading...
-        </p>
-      ) : authError != null ? (
-        <p>
-          Error: {authError}
-        </p>
-      ) : user != null ? (
-        <p>
-          (Redirecting) Signed In: {user.uid}
-        </p>
-      ) : (
-        <SignInForm
-          onSignedIn={onSignedIn}
-        />
-      )}
+      <Container className='mt-4'>
+      <h3>Sign In</h3>
+        {authLoading ? (
+          <p>
+            Loading...
+          </p>
+        ) : authError != null ? (
+          <p>
+            Error: {authError}
+          </p>
+        ) : user != null ? (
+          <p>
+            (Redirecting) Signed In: {user.uid}
+          </p>
+        ) : (
+          <SignInForm
+            onSignedIn={onSignedIn}
+          />
+        )}
+      </Container>
     </div>
   )
 }

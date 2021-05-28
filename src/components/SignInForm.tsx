@@ -39,7 +39,7 @@ function SignInForm(props: SignInFormProps) {
 
   return (
     <Form onSubmit={handleSubmit(onSubmit)}>
-      <FormGroup>
+      <FormGroup className='my-2'>
         <Label for='email'>Email</Label>
         <Input
           type='email'
@@ -52,7 +52,7 @@ function SignInForm(props: SignInFormProps) {
         </FormFeedback>
       </FormGroup>
 
-      <FormGroup>
+      <FormGroup className='my-2'>
         <Label for='password'>Password</Label>
         <Input
           type='password'
@@ -67,7 +67,7 @@ function SignInForm(props: SignInFormProps) {
 
       <Spinner size='sm' color='light' hidden={!isSubmitting} />
 
-      <Button color='primary' type='submit' disabled={isSubmitting}>
+      <Button className='my-2' color='primary' type='submit' disabled={isSubmitting}>
         Login
       </Button>
 

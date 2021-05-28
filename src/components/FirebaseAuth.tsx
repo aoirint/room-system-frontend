@@ -1,6 +1,5 @@
 import React from 'react'
 import { Redirect } from 'react-router-dom'
-import LoadingOverlay from 'react-loading-overlay'
 import firebase from './Firebase'
 import { useAuthState } from 'react-firebase-hooks/auth'
 
@@ -13,11 +12,9 @@ function FirebaseAuth (props: FirebaseAuthProps): JSX.Element {
 
   if (loading) {
     return (
-      <LoadingOverlay
-        active
-        spinner
-        text='Loading...'
-      />
+      <div>
+        Loading...
+      </div>
     )
   }
 

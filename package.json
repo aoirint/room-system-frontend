@@ -17,6 +17,7 @@
     "@types/react-dom": "^16.9.12",
     "@types/react-router-dom": "^5.1.7",
     "@types/yup": "^0.29.11",
+    "bootstrap": "^5.0.1",
     "chart.js": "^2.9.4",
     "chartjs-plugin-colorschemes": "^0.4.0",
     "firebase": "^8.4.1",
